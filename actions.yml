@@ -1,4 +1,3 @@
-
 name: 'Auto Release Draft'
 description: 'Drafts a GitHub release with the changes introduced by a newly created version tag.'
 author: 'Enrico Campidoglio'
