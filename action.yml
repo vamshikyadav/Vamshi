@@ -1,45 +1,46 @@
-# action.yml
-name: "GitHub Create Tag Release"
-description: "Create a GitHub release from a pushed Tag."
-branding:
-  icon: "zap"
-  color: "white"
+name: 'Create a Release'
+description: 'Create a release for a tag in your repository'
+author: 'GitHub'
 inputs:
-  # Version and release control inputs
-  version_regex:
-    description: "Regular expression to verify that the version is in a correct format. Defaults to .* (accept everything)."
-    default: "^.*$"
+  tag_name:
+    description: 'The name of the tag. This should come from the webhook payload, `github.GITHUB_REF` when a user pushes a new tag'
+    required: true
+  release_name:
+    description: 'The name of the release. For example, `Release v1.0.1`'
+    required: true
+  body:
+    description: 'Text describing the contents of the tag.'
     required: false
-  prerelease_regex:
-    description: "Any version matching this regular expression will be marked as pre-release. Disabled by default."
-    default: ""
+  body_path:
+    description: 'Path to file with information about the tag.'
     required: false
-  create_draft:
-    description: "Create the releases as draft (true|false [default: false]). Existing will not be updated from released to draft."
-    default: "false"
+  draft:
+    description: '`true` to create a draft (unpublished) release, `false` to create a published one. Default: `false`'
     required: false
-  update_existing:
-    description: "Controls whether an existing release should be updated with data from the latest push (true|false [default: false])."
-    default: "false"
+    default: false
+  prerelease:
+    description: '`true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`'
     required: false
-  created_tag:
-    description: "Allows to pass an already created tag, forces update_existing to true."
-    default: ""
+    default: false
+  commitish:
+    description: 'Any branch or commit SHA the Git tag is created from, unused if the Git tag already exists. Default: SHA of current commit'
     required: false
-  release_title:
-    description: "Allows to pass a title for the release."
-    default: ""
+  owner:
+    description: 'Owner of the repository if it is not the current one'
     required: false
-
-  # Inputs related to the Changelog parsing
-  changelog_file:
-    description: "Path of file that contains the Markdown formatted changelog."
-    default: "CHANGELOG.md"
+  repo:
+    description: 'Repository on which to release.  Used only if you want to create the release on another repo'
     required: false
-  changelog_heading:
-    description: "Heading level at which the tag headings exist."
-    default: "h2"
-    required: false
+outputs:
+  id:
+    description: 'The ID of the created Release'
+  html_url:
+    description: 'The URL users can navigate to in order to view the release'
+  upload_url:
+    description: 'The URL for uploading assets to the release'
 runs:
-  using: "docker"
-  image: "Dockerfile"
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'tag'
+  color: 'gray-dark'
