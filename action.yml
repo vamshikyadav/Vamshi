@@ -1,22 +1,16 @@
-# action.yml
-name: 'Tag/Release on Push Action'
-description: 'Creates a Tag/Release on Push. Generates Release Notes. Customizable with Pull Request Labels'
-author: 'rymndhng'
+name: 'Auto Release Draft'
+description: 'Drafts a GitHub release with the changes introduced by a newly created version tag.'
+author: 'Enrico Campidoglio'
 inputs:
-  bump_version_scheme:
-    description: 'The bumping scheme to use by default. One of minor|major|patch|norelease'
+  repo-token:
+    description: 'The GITHUB_TOKEN used to authenticate to the current repository'
     required: true
-  release_body:
-    description: "Additional text to insert into the release's body."
-    required: false
 outputs:
-  tag_name:
-    description: 'Tag of released version'
-  version:
-    description: 'Version of release'
+  release-url:
+    description: 'The URL of the GitHub release that was drafted'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'node12'
+  main: 'dist/index.js'
 branding:
-  icon: 'award'
-  color: 'blue'
+  color: orange
+  icon: tag
