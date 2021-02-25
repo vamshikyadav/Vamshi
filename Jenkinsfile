@@ -1,4 +1,6 @@
-properties([
+
+// this will be a major changes
+ properties([
   parameters([
     choice(name: 'DraftRelease', choices: ['yes', 'no'], description: 'Releaseing git draft')
   ])
